@@ -1,0 +1,19 @@
+{
+	"name":              "pumasoft/puma-api",
+	"description":       "description",
+	"minimum-stability": "stable",
+	"license":           "proprietary",
+	"authors":           [
+		{
+			"name":  "George Dryser",
+			"email": "george.dryser@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"PumaAPI\\": "PumaAPI/"
+		}
+	},
+	"require":           {
+	}
+}
