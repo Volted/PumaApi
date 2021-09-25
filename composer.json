@@ -1,6 +1,7 @@
 {
 	"name":              "pumasoft/puma-api",
-	"description":       "description",
+	"description":       "Pumasoft API certificate issuer engine",
+	"type":              "library",
 	"minimum-stability": "stable",
 	"license":           "proprietary",
 	"authors":           [
@@ -9,7 +10,7 @@
 			"email": "george.dryser@gmail.com"
 		}
 	],
-	"autoload": {
+	"autoload":          {
 		"psr-4": {
 			"PumaAPI\\": "PumaAPI/"
 		}
