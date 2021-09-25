@@ -5,7 +5,6 @@ namespace PumaAPI\Model;
 trait Config {
 
     private $Config;
-    //something
 
     private function _getConfig($ManifestPath): void {
         $this->Config = parse_ini_file($ManifestPath . DIRECTORY_SEPARATOR . 'service.ini', true) ?? [];
