@@ -6,8 +6,8 @@ trait Config {
 
     private $Config;
 
-    private function _getConfig(): void {
-        $this->Config = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . '__model.ini', true) ?? [];
+    private function _getConfig($ManifestPath): void {
+        $this->Config = parse_ini_file($ManifestPath . DIRECTORY_SEPARATOR . 'service.ini', true) ?? [];
     }
 
     public static function base64_encode_url($string) {

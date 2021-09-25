@@ -10,11 +10,13 @@ class Contract {
     private $ContractBody = [];
     /** @var $Validator Validator */
     private $Validator;
+    private $ManifestPath;
 
     /**
      * @throws Rawr
      */
-    public function __construct() {
+    public function __construct($ManifestPath) {
+        $this->ManifestPath = $ManifestPath;
         $this->_setAvailableMethods();
         if (empty($this->AvailableMethods)) {
             throw new Rawr('No methods allowed', Rawr::BAD_REQUEST);
@@ -23,7 +25,7 @@ class Contract {
 
     private function _setAvailableMethods() {
         $allowed = ['get', 'post', 'put', 'delete'];
-        $dir = scandir(__DIR__ . DIRECTORY_SEPARATOR);
+        $dir = scandir($this->ManifestPath);
         foreach ($dir as $item) {
             if (in_array($item, $allowed)) {
                 $this->AvailableMethods[$item] = true;
@@ -88,7 +90,7 @@ class Contract {
     }
 
     private function _getAvailableRootsFor($Method): Contract {
-        $dir = scandir(__DIR__ . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method);
+        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method);
         foreach ($dir as $item) {
             if ($item == '.' or $item == '..') continue;
             $this->AvailableRoots[$item] = true;
@@ -107,7 +109,7 @@ class Contract {
     }
 
     private function _getResourcesFor($Method, $Root): Contract {
-        $dir = scandir(__DIR__ . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method . DIRECTORY_SEPARATOR . $Root);
+        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method . DIRECTORY_SEPARATOR . $Root);
         foreach ($dir as $item) {
             if ($item == '.' or $item == '..') continue;
             $this->AvailableResources[pathinfo($item, PATHINFO_FILENAME)] = true;
@@ -133,7 +135,7 @@ class Contract {
      */
     private function _loadContractOf($method, $root, $resource): void {
         $path = implode(DIRECTORY_SEPARATOR, [
-            __DIR__, '__manifest', $method, $root, $resource . '.json',
+            $this->ManifestPath, $method, $root, $resource . '.json',
         ]);
 
         $file = @file_get_contents($path);

@@ -15,6 +15,7 @@
 			"PumaAPI\\": "PumaAPI/"
 		}
 	},
-	"require":           {
+	"require": {
+		"ext-json": "*"
 	}
 }

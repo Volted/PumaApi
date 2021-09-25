@@ -14,8 +14,8 @@ class Validator {
 
     private $Config;
 
-    public function __construct() {
-        $this->_getConfig();
+    public function __construct($ManifestPath) {
+        $this->_getConfig($ManifestPath);
     }
 
     /**
