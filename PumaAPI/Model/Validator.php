@@ -45,11 +45,11 @@ class Validator {
     }
 
     public function validAlgorithm($Input): bool {
-        return isset($this->Config['rules']['alg']) and $this->Config['rules']['alg'] == $Input;
+        return isset($this->Config['token']['head']['alg']) and $this->Config['token']['head']['alg'] == $Input;
     }
 
     public function validTokenType($Input): bool {
-        return isset($this->Config['rules']['typ']) and $this->Config['rules']['typ'] == $Input;
+        return isset($this->Config['token']['head']['typ']) and $this->Config['token']['head']['typ'] == $Input;
     }
 
     public function validIssuer($Input): bool {

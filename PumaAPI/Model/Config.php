@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpPrivateFieldCanBeLocalVariableInspection */
 
 namespace PumaAPI\Model;
 

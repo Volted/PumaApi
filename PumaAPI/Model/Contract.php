@@ -57,7 +57,7 @@ class Contract {
                 $contractJWTPayload
                 ) = $this->_getContractDetails();
 
-            $this->Validator = new Validator();
+            $this->Validator = new Validator($this->ManifestPath);
 
             $this
                 ->_validateRequestHeader($contractHeaders, $Request->getRequestHeaders())
@@ -90,7 +90,7 @@ class Contract {
     }
 
     private function _getAvailableRootsFor($Method): Contract {
-        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method);
+        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . $Method);
         foreach ($dir as $item) {
             if ($item == '.' or $item == '..') continue;
             $this->AvailableRoots[$item] = true;
@@ -109,7 +109,7 @@ class Contract {
     }
 
     private function _getResourcesFor($Method, $Root): Contract {
-        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $Method . DIRECTORY_SEPARATOR . $Root);
+        $dir = scandir($this->ManifestPath . DIRECTORY_SEPARATOR . $Method . DIRECTORY_SEPARATOR . $Root);
         foreach ($dir as $item) {
             if ($item == '.' or $item == '..') continue;
             $this->AvailableResources[pathinfo($item, PATHINFO_FILENAME)] = true;
