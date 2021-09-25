@@ -8,7 +8,7 @@ use PumaAPI\Model\Rawr;
 use PumaAPI\Model\Request;
 
 
-class Director {
+class API {
 
     /** @var $Request Request */
     private $Request;
@@ -28,12 +28,12 @@ class Director {
         $this->_issueCertificate()->_sendResponse();
     }
 
-    private function _parseRequest(): Director {
+    private function _parseRequest(): API {
         $this->Request = new Request();
         return $this;
     }
 
-    private function _getCorrespondingContract(): Director {
+    private function _getCorrespondingContract(): API {
         $this->Contract = new Contract();
         return $this;
     }
@@ -41,7 +41,7 @@ class Director {
     /**
      * @throws Rawr
      */
-    private function _validateRequest(): Director {
+    private function _validateRequest(): API {
         try {
             $this->Contract->validate($this->Request);
         } catch (Rawr $e) {
@@ -61,7 +61,7 @@ class Director {
         }
     }
 
-    private function _issueCertificate(): Director {
+    private function _issueCertificate(): API {
         $Certificate = new Certificate($this->Contract->getSterilizedContractFor($this->Request));
         return $this;
     }
