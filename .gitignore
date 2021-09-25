@@ -2,3 +2,5 @@ __manifest
 tests.php
 .idea
 .htaccess
+/vendor/
+composer.phar
