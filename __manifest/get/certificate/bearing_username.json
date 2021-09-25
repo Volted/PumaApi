@@ -1,0 +1,43 @@
+{
+	"Request":  {
+		"Headers": {
+			"Content-Type":  "application/json",
+			"Authorization": {
+				"Header":    {
+					"alg": "<<validAlgorithm>>",
+					"typ": "<<validTokenType>>"
+				},
+				"Payload":   {
+					"iss":      "<<validIssuer>>",
+					"exp":      "<<validExpiryUnixTimestamp>>",
+					"username": "<<notEmptyString>>",
+					"password": "<<notEmptyString>>"
+				},
+				"Signature": "<<validSignature>>"
+			}
+		},
+		"Body":    {}
+	},
+	"Response": {
+		"Headers": {
+			"Content-Type":  "application/json",
+			"Authorization": {
+				"Header":    {
+					"alg": "HS256",
+					"typ": "JWT"
+				},
+				"Payload":   {
+					"iss":   "PumaAuth",
+					"exp":   "unix timestamp",
+					"name":  "name | empty",
+					"phone": "phone | empty",
+					"email": "email | empty ",
+					"sub":   "sub_id | empty ",
+					"res":   "success | incorrect password"
+				},
+				"Signature": "<<valid_signature>>"
+			}
+		},
+		"Body":    {}
+	}
+}

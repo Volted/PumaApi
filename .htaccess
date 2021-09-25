@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteRule ^(.*)$ test.php?url=$1 [QSA,L]
+# Block access to INI and PHP
+<FilesMatch "\.ini$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+<FilesMatch "\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+<FilesMatch "test[0-9]?\.php$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
