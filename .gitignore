@@ -1,4 +1,4 @@
-__manifest/*
+__manifest
 test.php
 .idea
 .htaccess
