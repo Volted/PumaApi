@@ -4,3 +4,4 @@ tests.php
 .htaccess
 /vendor/
 composer.phar
+composer.lock
