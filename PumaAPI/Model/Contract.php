@@ -214,7 +214,7 @@ class Contract {
         }
     }
 
-    public function getSterilizedContractFor(Request $Request) :array{
+    public function getSterilized(Request $Request): array {
         list($method, $root, $resource) = $Request->getMethodRootResource();
         list(
             $contractHeaders,
@@ -245,6 +245,10 @@ class Contract {
             $contract['JWTPayload'][$name] = $Request->getJWTPayload()[$name];
         }
         return $contract;
+    }
+
+    public function getContractedResponse(): array {
+        return $this->ContractBody['Response'] ?? [];
     }
 
 
