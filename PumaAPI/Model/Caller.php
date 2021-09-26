@@ -4,34 +4,33 @@ namespace PumaAPI\Model;
 
 class Caller {
 
-    use Config;
 
     const POST = 'POST';
     const GET = 'GET';
     const PUT = 'PUT';
     const DELETE = 'DELETE';
-
-
+    
     private $URL;
     private $Method;
     private $Headers;
-    private $JWTHead;
-    private $JWTPayload;
+    private $JWT;
     private $Body;
 
-    public function __construct($URL, $Method, $Headers, $JWTHead, $JWTPayload, $Body) {
-        $this->_getConfig();
-        $this->URL = $URL;
+    public function __construct($Method,$URL, $Headers, $JWT, $Body) {
         $this->Method = $Method;
+        $this->URL = $URL;
         $this->Headers = $Headers;
-        $this->JWTHead = $JWTHead;
-        $this->JWTPayload = $JWTPayload;
+        $this->JWT = $JWT;
         $this->Body = $Body;
         return $this;
     }
 
-    public function getResponse() {
+    public function initiateRequest() {
 
+    }
+
+    public function captureResponse() {
+        
     }
 
 

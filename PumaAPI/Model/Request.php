@@ -115,7 +115,7 @@ class Request {
                 $this->JWTSignature = $content;
             } else {
                 $document[] = $content;
-                $decode = Validator::base64_decode_url($content);
+                $decode = Tokenizer::base64_decode_url($content);
                 if ($decode) {
                     $json = json_decode($decode);
                     if (json_last_error() === JSON_ERROR_NONE) {

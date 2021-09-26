@@ -7,15 +7,15 @@ use Exception;
 
 class Validator {
 
-    use Config;
-
     const END_RULE = '>>';
     const BEGIN_RULE = '<<';
 
-    private $Config;
+    private $ConfigPath;
+    /** @var bool|Tokenizer */
+    private $Tokenizer = false;
 
-    public function __construct($ManifestPath) {
-        $this->_getConfig($ManifestPath);
+    public function __construct($configPath) {
+        $this->ConfigPath = $configPath;
     }
 
     /**
@@ -39,21 +39,29 @@ class Validator {
     //========================
     //-------- Rules ---------
     //========================
-
     public function notEmptyString($Input): bool {
         return is_string($Input) and trim($Input) != '';
     }
 
     public function validAlgorithm($Input): bool {
-        return isset($this->Config['token']['head']['alg']) and $this->Config['token']['head']['alg'] == $Input;
+        if (!$this->Tokenizer) {
+            $this->Tokenizer = new Tokenizer($this->ConfigPath);
+        }
+        return $this->Tokenizer->isValidAlgorithm($Input);
     }
 
     public function validTokenType($Input): bool {
-        return isset($this->Config['token']['head']['typ']) and $this->Config['token']['head']['typ'] == $Input;
+        if (!$this->Tokenizer) {
+            $this->Tokenizer = new Tokenizer($this->ConfigPath);
+        }
+        return $this->Tokenizer->isValidType($Input);
     }
 
     public function validIssuer($Input): bool {
-        return isset($this->Config['auth'][$Input]);
+        if (!$this->Tokenizer) {
+            $this->Tokenizer = new Tokenizer($this->ConfigPath);
+        }
+        return $this->Tokenizer->isValidIssuer($Input);
     }
 
     public function validExpiryUnixTimestamp($Input): bool {
@@ -69,9 +77,10 @@ class Validator {
     }
 
     public function signatureMatches($Signature, $Token, $Issuer): bool {
-        $key = $this->Config['auth'][$Issuer] ?? '';
-        $PumaHash = self::base64_encode_url(hash_hmac('SHA256', $Token, $key, true));
-        return $PumaHash === $Signature;
+        if (!$this->Tokenizer) {
+            $this->Tokenizer = new Tokenizer($this->ConfigPath);
+        }
+        return $this->Tokenizer->isProperlySigned($Token, $Signature, $Issuer);
     }
 
     //========================
