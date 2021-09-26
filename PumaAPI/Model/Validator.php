@@ -70,7 +70,7 @@ class Validator {
 
     public function signatureMatches($Signature, $Token, $Issuer): bool {
         $key = $this->Config['auth'][$Issuer] ?? '';
-        $PumaHash = self::base64_encode_url(hash_hmac('SHA256', $Token, $key,true));
+        $PumaHash = self::base64_encode_url(hash_hmac('SHA256', $Token, $key, true));
         return $PumaHash === $Signature;
     }
 
