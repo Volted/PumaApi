@@ -4,28 +4,34 @@ namespace PumaAPI\Model;
 
 class Tokenizer {
 
-    public $Head;
-    public $Payload;
-    public $Signature;
+
     public $ServiceConfig;
 
     public function __construct($pathToConfig) {
         $this->ServiceConfig = parse_ini_file($pathToConfig . DIRECTORY_SEPARATOR . 'service.ini', true) ?? [];
     }
 
-    public function isValidAlgorithm($Alg) :bool{
+    public function getToken($Issuer, $Head, $Body) {
+        $head = self::base64_encode_url(json_encode($Head));
+        $body = self::base64_encode_url(json_encode($Body));
+        $key = $this->ServiceConfig['auth'][$Issuer] ?? '';
+        $signature = self::base64_encode_url(hash_hmac('SHA256', $head . '.' . $body, $key, true));
+        return implode('.', [$head, $body, $signature]);
+    }
+
+    public function isValidAlgorithm($Alg): bool {
         return isset($this->ServiceConfig['token']['head']['alg']) and $this->ServiceConfig['token']['head']['alg'] == $Alg;
     }
 
-    public function isValidType($Typ) :bool{
+    public function isValidType($Typ): bool {
         return isset($this->ServiceConfig['token']['head']['typ']) and $this->ServiceConfig['token']['head']['typ'] == $Typ;
     }
 
-    public function isValidIssuer($Iss) :bool{
+    public function isValidIssuer($Iss): bool {
         return isset($this->ServiceConfig['auth'][$Iss]);
     }
 
-    public function isProperlySigned($Token, $Signature, $Issuer) :bool{
+    public function isProperlySigned($Token, $Signature, $Issuer): bool {
         $key = $this->ServiceConfig['auth'][$Issuer] ?? '';
         $PumaHash = self::base64_encode_url(hash_hmac('SHA256', $Token, $key, true));
         return $PumaHash === $Signature;
