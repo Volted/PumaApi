@@ -31,6 +31,9 @@ class Rawr extends Exception {
     }
 
     private function _logError() {
+        if(defined('DO_NOT_LOG_EXCEPTIONS')){
+            return;
+        }
         $errorData['ErrorCode'] = $this->getCode();
         $errorData['Message'] = $this->getMessage();
         $errorData['InFile'] = $this->getFile();
