@@ -22,6 +22,15 @@ class Validator {
      * @throws Rawr
      */
     public function validate($input, $command, $parameterName) {
+
+        if (is_array($command)) {
+            if(!is_array($input)){
+                throw new Rawr("$parameterName must be array", Rawr::BAD_REQUEST);
+            }else{
+                return;
+            }
+        }
+
         $rule = $this->_extractRule($command);
         if ($rule) {
             if (method_exists($this, $rule)) {
