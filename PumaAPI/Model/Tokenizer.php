@@ -11,12 +11,16 @@ class Tokenizer {
         $this->ServiceConfig = parse_ini_file($pathToConfig . DIRECTORY_SEPARATOR . 'service.ini', true) ?? [];
     }
 
-    public function getToken($Issuer, $Head, $Body) {
+    public function getToken($Issuer, $Head, $Body): string {
         $head = self::base64_encode_url(json_encode($Head));
         $body = self::base64_encode_url(json_encode($Body));
         $key = $this->ServiceConfig['auth'][$Issuer] ?? '';
         $signature = self::base64_encode_url(hash_hmac('SHA256', $head . '.' . $body, $key, true));
         return implode('.', [$head, $body, $signature]);
+    }
+
+    public function getIssuer() {
+        return $this->ServiceConfig['ident']['iss'] ?? '';
     }
 
     public function isValidAlgorithm($Alg): bool {
