@@ -12,7 +12,8 @@
 	],
 	"autoload":          {
 		"psr-4": {
-			"PumaAPI\\": "PumaAPI/"
+			"PumaAPI\\": "PumaAPI/",
+			"Tests\\": "__tests/"
 		}
 	},
 	"require": {

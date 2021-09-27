@@ -5,3 +5,4 @@ tests.php
 /vendor/
 composer.phar
 composer.lock
+/__tests
