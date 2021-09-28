@@ -31,7 +31,7 @@ class Rawr extends Exception {
     }
 
     private function _logError() {
-        if(defined('DO_NOT_LOG_EXCEPTIONS')){
+        if (defined('DO_NOT_LOG_EXCEPTIONS')) {
             return;
         }
         $errorData['ErrorCode'] = $this->getCode();
@@ -51,6 +51,9 @@ class Rawr extends Exception {
     private function _sendResponse() {
         http_response_code($this->getCode());
         header("Content-Type:application/json");
-        exit(json_encode(self::$Manifest[$this->getCode()] ?? []));
+        $content = defined('DESCRIPTIVE_ERRORS')
+            ? ['client' => self::$Manifest[$this->getCode()], 'server' => $this->getMessage()]
+            : self::$Manifest[$this->getCode()];
+        exit(json_encode($content));
     }
 }

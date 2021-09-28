@@ -19,8 +19,23 @@ class Tokenizer {
         return implode('.', [$head, $body, $signature]);
     }
 
+    public function getSignatureFor($Issuer, $Head, $Body) {
+        $head = self::base64_encode_url(json_encode($Head));
+        $body = self::base64_encode_url(json_encode($Body));
+        $key = $this->ServiceConfig['auth'][$Issuer] ?? '';
+        return self::base64_encode_url(hash_hmac('SHA256', $head . '.' . $body, $key, true));
+    }
+
     public function getIssuer() {
         return $this->ServiceConfig['ident']['iss'] ?? '';
+    }
+
+    public function getAlgorithm() {
+        return $this->ServiceConfig['token']['head']['alg'] ?? '';
+    }
+
+    public function getTokenType() {
+        return $this->ServiceConfig['token']['head']['typ'] ?? '';
     }
 
     public function isValidAlgorithm($Alg): bool {
