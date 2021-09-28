@@ -24,9 +24,9 @@ class Validator {
     public function validate($input, $command, $parameterName) {
 
         if (is_array($command)) {
-            if(!is_array($input)){
+            if (!is_array($input)) {
                 throw new Rawr("$parameterName must be array", Rawr::BAD_REQUEST);
-            }else{
+            } else {
                 return;
             }
         }
@@ -73,16 +73,17 @@ class Validator {
         return $this->Tokenizer->isValidIssuer($Input);
     }
 
-    public function validExpiryUnixTimestamp($Input): bool {
+    public function validUnixTimestamp($Input): bool {
         try {
-            $date = new DateTime('@' . $Input);
-            if ($date < (new DateTime())) {
-                return false;
-            }
+            new DateTime('@' . $Input);
         } catch (Exception $e) {
             return false;
         }
         return true;
+    }
+
+    public function integer($Input): bool {
+        return is_integer($Input);
     }
 
     public function signatureMatches($Signature, $Token, $Issuer): bool {
