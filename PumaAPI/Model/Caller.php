@@ -9,6 +9,13 @@ class Caller {
     const PUT = 'PUT';
     const DELETE = 'DELETE';
 
+    static $AcceptableMethods = [
+        self::POST,
+        self::GET,
+        self::PUT,
+        self::DELETE,
+    ];
+
     private $URL;
     private $Method;
     private $Headers;

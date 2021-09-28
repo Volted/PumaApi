@@ -31,7 +31,7 @@ class Validator {
             }
         }
 
-        $rule = $this->_extractRule($command);
+        $rule = self::extractRule($command);
         if ($rule) {
             if (method_exists($this, $rule)) {
                 if (!$this->$rule($input)) {
@@ -101,7 +101,7 @@ class Validator {
         )));
     }
 
-    private function _extractRule($command) {
+    public static function extractRule($command) {
         if (strpos($command, self::BEGIN_RULE) == 0 and strpos($command, self::END_RULE) !== false) {
             $rule = str_replace(self::BEGIN_RULE, '', $command);
             return str_replace(self::END_RULE, '', $rule);
