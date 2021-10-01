@@ -52,6 +52,9 @@ class Validator {
         return is_string($Input) and trim($Input) != '';
     }
 
+    /**
+     * @throws Rawr
+     */
     public function validAlgorithm($Input): bool {
         if (!$this->Tokenizer) {
             $this->Tokenizer = new Tokenizer($this->ConfigPath);
@@ -59,6 +62,9 @@ class Validator {
         return $this->Tokenizer->isValidAlgorithm($Input);
     }
 
+    /**
+     * @throws Rawr
+     */
     public function validTokenType($Input): bool {
         if (!$this->Tokenizer) {
             $this->Tokenizer = new Tokenizer($this->ConfigPath);
@@ -66,6 +72,9 @@ class Validator {
         return $this->Tokenizer->isValidType($Input);
     }
 
+    /**
+     * @throws Rawr
+     */
     public function validIssuer($Input): bool {
         if (!$this->Tokenizer) {
             $this->Tokenizer = new Tokenizer($this->ConfigPath);
@@ -86,6 +95,9 @@ class Validator {
         return is_integer($Input);
     }
 
+    /**
+     * @throws Rawr
+     */
     public function signatureMatches($Signature, $Token, $Issuer): bool {
         if (!$this->Tokenizer) {
             $this->Tokenizer = new Tokenizer($this->ConfigPath);

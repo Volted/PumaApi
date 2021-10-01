@@ -16,8 +16,12 @@ class API {
     /** @var $Contract Contract */
     private $Contract;
 
-    public function __construct($ManifestPath) {
-        $this->ManifestPath = $ManifestPath;
+    public function __construct($alternativeManifestPath = false) {
+        if($alternativeManifestPath){
+            $this->ManifestPath = $alternativeManifestPath;
+        }else{
+            $this->ManifestPath = realpath('.') . DIRECTORY_SEPARATOR . '__manifest';
+        }
         try {
             $this
                 ->_parseRequest()
