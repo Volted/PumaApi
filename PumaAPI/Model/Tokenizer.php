@@ -79,8 +79,8 @@ class Tokenizer {
     }
 
     public function isAuthentic(array $TokenContent, $Issuer): bool {
-        $signature = $this->generateSignatureFor($Issuer, $TokenContent[0], $TokenContent[1]);
-        if ($signature === $TokenContent[2]) {
+        $signature = $this->generateSignatureFor($Issuer, $TokenContent['Head'], $TokenContent['Payload']);
+        if ($signature === $TokenContent['Signature']) {
             return true;
         }
         return false;
@@ -107,8 +107,8 @@ class Tokenizer {
             $JWT = explode('.', $JWT);
             if (count($JWT) == 3) {
                 return [
-                    'Head'      => json_decode(Tokenizer::base64_decode_url($JWT[0])),
-                    'Payload'   => json_decode(Tokenizer::base64_decode_url($JWT[1])),
+                    'Head'      => json_decode(Tokenizer::base64_decode_url($JWT[0]),true),
+                    'Payload'   => json_decode(Tokenizer::base64_decode_url($JWT[1]),true),
                     'Signature' => $JWT[2],
                 ];
             }
