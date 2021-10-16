@@ -1,36 +1,37 @@
 # PumaApi API gateway for Apache PHP Puma services
 
-## Micro API module designed to parse and validate REST requests with accordance to simple file structure defined in specific folder
+### Micro API module designed to parse and validate REST requests with accordance to simple file structure defined in specific folder
 
-<p>files are supposed to be placed in folowing order: ROOT/MANIFEST_FOLDER/REQUEST_METHOD/CONTROLLER/RESOURCE
-API contract JSON files are placed in corresponding folders</p>
-
-## Example:
-for operation api.domain/users/by-id 
-with GET method
-folder structure should reflect
-/__manifest/get/users/by-id.json
-where by-id.json is contract file describing the operation:
-<pre><code>
+files are supposed to be placed in following order:
+#####{ROOT}/{MANIFEST_FOLDER}/{REQUEST_METHOD}/{CONTROLLER}/{RESOURCE}
+API contract JSON files are placed in corresponding folders
+### Example:
+for operation 
+* url: api.domain/users/by-id
+* method: GET
+<p>folder structure should reflect:</p>
+<p>/__manifest/get/users/by-id.json</p>
+<p>where by-id.json is contract file describing the operation:</p>
+```json
 {
 	"Request":  {
 		"Headers": {
 			"Content-Type":  "application/json",
 			"Authorization": {
 				"Header":    {
-					"alg": "<<validAlgorithm>>",
-					"typ": "<<validTokenType>>"
+					"alg": "{{validAlgorithm}}",
+					"typ": "{{validTokenType}}"
 				},
 				"Payload":   {
-					"iss":      "<<validIssuer>>",
-					"exp":      "<<validUnixTimestamp>>"
+					"iss":      "{{validIssuer}}",
+					"exp":      "{{validUnixTimestamp}}"
 				},
-				"Signature": "<<validSignature>>"
+				"Signature": "{{validSignature}}"
 			}
 		},
 		"Body":    {
-			"username": "<<notEmptyString>>",
-			"password": "<<notEmptyString>>"
+			"username": "{{notEmptyString}}",
+			"password": "{{notEmptyString}}"
 		}
 	},
 	"Response": {
@@ -43,34 +44,35 @@ where by-id.json is contract file describing the operation:
 					"typ": "JWT"
 				},
 				"Payload":   {
-					"iss":   "<<validIssuer>>",
-					"exp":   "<<validUnixTimestamp>>",
-					"name":  "<<applicantName>>",
-					"roles": "<<applicantRoles>>",
-					"ref":   "<<refreshToken>>"
+					"iss":   "{{validIssuer}}",
+					"exp":   "{{validUnixTimestamp}}",
+					"name":  "{{applicantName}}",
+					"roles": "{{applicantRoles}}",
+					"ref":   "{{refreshToken}}"
 				},
-				"Signature": "<<valid_signature>>"
+				"Signature": "{{valid_signature}}"
 			}
 		},
 		"Body":       {
-			"result": "<<operationResult>>"
+			"result": "{{operationResult}}"
 		}
 	}
-}</code></pre>
-
+}
+```
 
 ## Global flags:
-## NOTE: const value does not metter the system will check if const is defined or not
+> :warning: **constants values are discarded the system will check if const is defined or not**
 <pre><code>
 const PUMA_API_LOG_EXCEPTIONS=true; // will php.log the exceptions, by default will not
 const PUMA_API_SEND_EXCEPTIONS_IN_RESPONSE=true; // will send exceptions in JSON response instead of php.log
 const PUMA_API_DO_NOT_VALIDATE_SSL = true; // will not send secure curl requests
 </code></pre>
 
-## NOTE: all global flags are intended for development environment on local machine should be kept on your local machine and never submitted to production.
+> :warning: **all global flags are intended for development environment on local machine should be kept on your local machine and never submitted to production.**
+
 with global flags absent API will act in most secure and discreet way possible.
 
-## Usage example:
+### Usage example:
 <pre><code>
 use PumaAPI\Controller\API;
 $Puma = new API({{MANIFEST_DIRECTORY}}); // manifest directory by default is ROOT/__manifest/
