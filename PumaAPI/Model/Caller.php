@@ -50,7 +50,7 @@ class Caller {
         curl_setopt($channel, CURLOPT_URL, $this->URL);
         curl_setopt($channel, CURLOPT_CUSTOMREQUEST, $this->Method);
         curl_setopt($channel, CURLOPT_RETURNTRANSFER, true);
-        if (defined('PUMA_API_VALIDATE_SSL')) {
+        if (defined('PUMA_API_DO_NOT_VALIDATE_SSL')) {
             curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, false);
         }
         $Headers = [];
