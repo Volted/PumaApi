@@ -50,6 +50,9 @@ class Caller {
         curl_setopt($channel, CURLOPT_URL, $this->URL);
         curl_setopt($channel, CURLOPT_CUSTOMREQUEST, $this->Method);
         curl_setopt($channel, CURLOPT_RETURNTRANSFER, true);
+        if (defined('PUMA_API_VALIDATE_SSL')) {
+            curl_setopt($channel, CURLOPT_SSL_VERIFYPEER, false);
+        }
         $Headers = [];
         foreach ($this->Headers as $header => $value) {
             $Headers[] = $header . ': ' . $value;
@@ -84,8 +87,8 @@ class Caller {
             $JWT = explode('.', $JWT);
             if (count($JWT) == 3) {
                 return [
-                    'Head'      => json_decode(Tokenizer::base64_decode_url($JWT[0]),true),
-                    'Payload'   => json_decode(Tokenizer::base64_decode_url($JWT[1]),true),
+                    'Head'      => json_decode(Tokenizer::base64_decode_url($JWT[0]), true),
+                    'Payload'   => json_decode(Tokenizer::base64_decode_url($JWT[1]), true),
                     'Signature' => $JWT[2],
                 ];
             }
