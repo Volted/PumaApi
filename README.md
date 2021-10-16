@@ -1,4 +1,4 @@
-# PumaApi API gateway for Puma services
+# PumaApi API gateway for Apache PHP Puma services
 
 ## Micro API module designed to parse and validate REST requests with accordance to simple file structure defined in specific folder
 
