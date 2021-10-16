@@ -183,7 +183,7 @@ class Contract {
     private function _validateJWTHeader($ContractJWTHeader, $RequestJWTHeader): Contract {
         foreach ($ContractJWTHeader as $param => $rule) {
             if (!isset($RequestJWTHeader[$param])) {
-                throw new Rawr('JWT header variable "' . $param . '" is missing', Rawr::BAD_REQUEST);
+                throw new Rawr('JWT header variable "' . $param . '" is missing', Rawr::UNAUTHORIZED);
             }
             $this->Validator->validate($RequestJWTHeader[$param], $rule, $param);
         }
@@ -196,7 +196,7 @@ class Contract {
     private function _validateJWTBody($ContractJWTPayload, $RequestJWTPayload): void {
         foreach ($ContractJWTPayload as $param => $rule) {
             if (!isset($RequestJWTPayload[$param])) {
-                throw new Rawr('JWT body variable "' . $param . '" is missing', Rawr::BAD_REQUEST);
+                throw new Rawr('JWT body variable "' . $param . '" is missing', Rawr::UNAUTHORIZED);
             }
             $this->Validator->validate($RequestJWTPayload[$param], $rule, $param);
         }
