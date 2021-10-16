@@ -79,7 +79,7 @@ with global flags absent API will act in most secure and discreet way possible.
 ### Usage example:
 ```php
 use PumaAPI\Controller\API;
-$Puma = new API({{MANIFEST_DIRECTORY}}); // manifest directory by default is ROOT/__manifest/
+$Puma = new API(/*{{MANIFEST_DIRECTORY}}*/); // manifest directory by default is ROOT/__manifest/
 $cert = $Puma->getCertificate(); // gets certified request formatted according to certificate file
 ```
 
