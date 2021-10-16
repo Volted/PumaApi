@@ -6,11 +6,12 @@
 API contract JSON files are placed in corresponding folders</p>
 
 ## Example:
-for operation api.domain/users/by-id // with get method
+for operation api.domain/users/by-id 
+with GET method
 folder structure should reflect
 /__manifest/get/users/by-id.json
-
-<pre><code>where by-id.json is contract file describing the operation:
+where by-id.json is contract file describing the operation:
+<pre><code>
 {
 	"Request":  {
 		"Headers": {
