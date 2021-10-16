@@ -12,7 +12,9 @@ for operation
 <p>folder structure should reflect:</p>
 <p>/__manifest/get/users/by-id.json</p>
 <p>where by-id.json is contract file describing the operation:</p>
-```json
+
+```javascript
+
 {
 	"Request":  {
 		"Headers": {
@@ -58,6 +60,7 @@ for operation
 		}
 	}
 }
+
 ```
 
 ## Global flags:
