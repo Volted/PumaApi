@@ -1,23 +1,23 @@
-<?php /** @noinspection PhpPropertyOnlyWrittenInspection */
+<?php
 
 namespace PumaAPI\Model;
 
 class Request {
 
-    private $isSecure;
-    private $IssuerIp;
+    private bool $isSecure;
+    private string $IssuerIp;
 
-    private $JWTHeader;
-    private $JWTPayload;
-    private $JWTSignature;
-    private $JWTDocument;
+    private array $JWTHeader;
+    private array $JWTPayload;
+    private string $JWTSignature;
+    private string $JWTDocument;
 
-    private $RequestMethod;
-    private $RequestHeaders;
-    private $RequestBody;
-    private $RequestedRoot;
-    private $RequestedResource;
-    private $RequestParameters;
+    private string $RequestMethod;
+    private array $RequestHeaders;
+    private array $RequestBody;
+    private ?string $RequestedRoot = null;
+    private ?string $RequestedResource = null;
+    private array $RequestParameters;
 
     /**
      * @throws Rawr
@@ -104,7 +104,7 @@ class Request {
         }
         $token = $this->RequestHeaders['Authorization'];
 
-        if (strpos($token, 'Bearer ') !== 0) {
+        if (!str_starts_with($token, 'Bearer ')) {
             throw new Rawr('Unacceptable Auth type', Rawr::BAD_REQUEST);
         }
         $token = substr($token, 7);

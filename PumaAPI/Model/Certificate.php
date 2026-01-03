@@ -1,14 +1,14 @@
-<?php /** @noinspection PhpUnused */
+<?php
 
 namespace PumaAPI\Model;
 
 class Certificate {
 
-    private $Request;
-    private $JWT;
-    private $Response;
+    private array $Request;
+    private array $JWT;
+    private array $Response;
 
-    public function __construct($SanitizedRequest, $ContractedResponse) {
+    public function __construct(array $SanitizedRequest,array $ContractedResponse) {
         $this->Request = [
             'Method'   => $SanitizedRequest['Method'],
             'Root'     => $SanitizedRequest['Root'],
@@ -24,35 +24,35 @@ class Certificate {
         return $this;
     }
 
-    public function getRequestedMethod() {
+    public function getRequestedMethod():string {
         return $this->Request['Method'];
     }
 
-    public function getRequestedRoot() {
+    public function getRequestedRoot():string {
         return $this->Request['Root'];
     }
 
-    public function getRequestedResource() {
+    public function getRequestedResource():string {
         return $this->Request['Resource'];
     }
 
-    public function getRequestHeaders() {
+    public function getRequestHeaders():array {
         return $this->Request['Headers'];
     }
 
-    public function getRequestBody() {
+    public function getRequestBody():array {
         return $this->Request['Body'];
     }
 
-    public function getRequestedJWTPayload() {
+    public function getRequestedJWTPayload():array {
         return $this->JWT['Payload'];
     }
 
-    public function getRequestedJWTHead() {
+    public function getRequestedJWTHead():array {
         return $this->JWT['Head'];
     }
 
-    public function getResponseContract() {
+    public function getResponseContract(): array {
         return $this->Response;
     }
 

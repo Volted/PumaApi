@@ -10,9 +10,8 @@ class Validator {
     const END_RULE = '>>';
     const BEGIN_RULE = '<<';
 
-    private $ConfigPath;
-    /** @var bool|Tokenizer */
-    private $Tokenizer = false;
+    private string $ConfigPath;
+    private bool|Tokenizer $Tokenizer = false;
 
     public function __construct($configPath) {
         $this->ConfigPath = $configPath;
@@ -21,7 +20,7 @@ class Validator {
     /**
      * @throws Rawr
      */
-    public function validate($input, $command, $parameterName) {
+    public function validate($input, $command, $parameterName): void {
 
         if (is_array($command)) {
             if (!is_array($input)) {
@@ -85,7 +84,7 @@ class Validator {
     public function validUnixTimestamp($Input): bool {
         try {
             new DateTime('@' . $Input);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
         return true;
@@ -114,8 +113,8 @@ class Validator {
         )));
     }
 
-    public static function extractRule($command) {
-        if (strpos($command, self::BEGIN_RULE) == 0 and strpos($command, self::END_RULE) !== false) {
+    public static function extractRule($command): array|false|string {
+        if (strpos($command, self::BEGIN_RULE) == 0 and str_contains($command, self::END_RULE)) {
             $rule = str_replace(self::BEGIN_RULE, '', $command);
             return str_replace(self::END_RULE, '', $rule);
         }

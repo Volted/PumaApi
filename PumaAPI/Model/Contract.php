@@ -4,18 +4,18 @@ namespace PumaAPI\Model;
 
 class Contract {
 
-    private $AvailableMethods = [];
-    private $AvailableRoots = [];
-    private $AvailableResources = [];
-    private $ContractBody = [];
+    private array $AvailableMethods = [];
+    private array $AvailableRoots = [];
+    private array $AvailableResources = [];
+    private array $ContractBody = [];
     /** @var $Validator Validator */
-    private $Validator;
-    private $ManifestPath;
+    private Validator $Validator;
+    private string $ManifestPath;
 
     /**
      * @throws Rawr
      */
-    public function __construct($ManifestPath) {
+    public function __construct(string $ManifestPath) {
         $this->ManifestPath = $ManifestPath;
         $this->_setAvailableMethods();
         if (empty($this->AvailableMethods)) {
@@ -23,7 +23,7 @@ class Contract {
         }
     }
 
-    private function _setAvailableMethods() {
+    private function _setAvailableMethods(): void {
         $allowed = ['get', 'post', 'put', 'delete'];
         $dir = scandir($this->ManifestPath);
         foreach ($dir as $item) {
@@ -37,7 +37,7 @@ class Contract {
      * @param Request $Request
      * @throws Rawr
      */
-    public function validate(Request $Request) {
+    public function validate(Request $Request): void {
 
         list($method, $root, $resource) = $Request->getMethodRootResource();
 
@@ -205,7 +205,7 @@ class Contract {
     /**
      * @throws Rawr
      */
-    public function authenticate(Request $Request) {
+    public function authenticate(Request $Request): void {
         if (!$this->Validator->signatureMatches(
             $Request->getJWTSignature(),
             $Request->getJWTDocument(),

@@ -9,31 +9,24 @@ class Caller {
     const PUT = 'PUT';
     const DELETE = 'DELETE';
 
-    static $AcceptableMethods = [
+    static array $AcceptableMethods = [
         self::POST,
         self::GET,
         self::PUT,
         self::DELETE,
     ];
 
-    private $URL;
-    private $Method;
-    private $Headers;
-    private $JWT;
-    private $Body;
+    private string $URL;
+    private string $Method;
+    private array $Headers;
+    private string $JWT;
+    private array $Body;
 
-    private $ResponseCode;
-    private $ResponseHeaders;
-    private $ResponseBody;
+    private int $ResponseCode;
+    private array $ResponseHeaders;
+    private string $ResponseBody;
 
-    /**
-     * @param       $Method
-     * @param       $URL
-     * @param       $Headers
-     * @param       $JWT
-     * @param array $Body
-     */
-    public function __construct($Method, $URL, $Headers, $JWT, array $Body = []) {
+    public function __construct(string $Method, string $URL, array $Headers, string $JWT, array $Body = []) {
         $this->Method = $Method;
         $this->URL = $URL;
         $this->Headers = $Headers;
@@ -45,7 +38,7 @@ class Caller {
     /**
      * @throws Rawr
      */
-    public function initRequest() {
+    public function initRequest(): void {
         $channel = curl_init($this->URL);
         curl_setopt($channel, CURLOPT_URL, $this->URL);
         curl_setopt($channel, CURLOPT_CUSTOMREQUEST, $this->Method);

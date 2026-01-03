@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpUnused */
+<?php
 
 namespace PumaAPI\Model;
 
@@ -8,7 +8,7 @@ use Exception;
 class Tokenizer {
 
 
-    public $ServiceConfig;
+    public array|false $ServiceConfig;
 
     /**
      * @throws Rawr
@@ -70,11 +70,11 @@ class Tokenizer {
         return $PumaHash === $Signature;
     }
 
-    public static function base64_encode_url(string $string) {
+    public static function base64_encode_url(string $string): array|string {
         return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($string));
     }
 
-    public static function base64_decode_url(string $string) {
+    public static function base64_decode_url(string $string): false|string {
         return base64_decode(str_replace(['-', '_'], ['+', '/'], $string));
     }
 
@@ -94,7 +94,7 @@ class Tokenizer {
                 if ($now < $expiry) {
                     return true;
                 }
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return false;
             }
         }

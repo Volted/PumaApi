@@ -3,6 +3,7 @@
 namespace PumaAPI\Model;
 
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 
 class Rawr extends Exception {
 
@@ -14,7 +15,7 @@ class Rawr extends Exception {
     const BAD_REQUEST = 400;
 
 
-    private static $Manifest = [
+    private static array $Manifest = [
         self::INTERNAL_ERROR     => ['error' => 'server error'],
         self::METHOD_NOT_ALLOWED => ['error' => 'method not allowed'],
         self::NOT_FOUND          => ['error' => 'not found'],
@@ -24,13 +25,13 @@ class Rawr extends Exception {
     ];
 
 
-    public function handleException() {
+    #[NoReturn]
+    public function handleException(): void {
         $this->_logError();
         $this->_sendResponse();
-        exit();
     }
 
-    private function _logError() {
+    private function _logError(): void {
         if (!defined('PUMA_API_LOG_EXCEPTIONS')) {
             return;
         }
@@ -48,7 +49,8 @@ class Rawr extends Exception {
         error_log(print_r($errorData, true));
     }
 
-    private function _sendResponse() {
+    #[NoReturn]
+    private function _sendResponse(): void {
         http_response_code($this->getCode());
         header("Content-Type:application/json");
         $content = defined('PUMA_API_SEND_EXCEPTIONS_IN_RESPONSE')
