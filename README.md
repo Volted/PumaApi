@@ -627,3 +627,5 @@ class AuthController {
 | `getJWTResponse()`                                  | `array`  | Parse JWT from response            |
 
 ---
+## Important
+This is a personal side project developed independently in my own time, using my own equipment and resources. It has no connection to any employer, client, or commercial work.
