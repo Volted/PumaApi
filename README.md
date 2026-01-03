@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-purple.svg)
-![License](https://img.shields.io/badge/license-proprietary-red.svg)
+![License](https://img.shields.io/badge/license-mit.svg)
 
 ## API Gateway for Puma Services
 
