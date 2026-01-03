@@ -3,7 +3,7 @@
 	"description":       "Pumasoft API certificate issuer engine",
 	"type":              "library",
 	"minimum-stability": "stable",
-	"license":           "proprietary",
+	"license":           "MIT",
 	"authors":           [
 		{
 			"name":  "George Dryser",
